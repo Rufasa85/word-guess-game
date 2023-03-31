@@ -9,6 +9,7 @@ var userGuess = [];
 var isPlaying =false;
 var countdownTimer;
 var secondsLeft = 10;
+var rounds = 3;
 //remember wins/losses in localstorage
 var wins= localStorage.getItem("wins")|| 0;
 var losses = localStorage.getItem("losses") || 0;
@@ -20,6 +21,7 @@ lossesH3.textContent = losses;
 // start game game when button is clicked
 //randomly select word
 function startGame(){
+    document.querySelector("#round").textContent=rounds;
     userGuess=[];
     secondsLeft=10;
     timeH3.textContent=secondsLeft;
@@ -42,15 +44,21 @@ function startGame(){
             //if time runs out, lose
             clearInterval(countdownTimer);
             timeH3.textContent = "you lose!"
-            isPlaying=false;
+            rounds--;
+            document.querySelector("#round").textContent=rounds;
             losses++;
-            localStorage.setItem("losses",losses)
+            localStorage.setItem("losses",losses);
             lossesH3.textContent = losses;
+            if(!rounds){
+                isPlaying=false;
+            } else{
+                startGame();
+            }
         }
     },1000)
 }
 // while playing, check for keystrokes
-document.addEventListener("keyup",function(event){
+document.addEventListener("keyup",function(event){   
     if(!isPlaying){
         return;
     }
@@ -69,18 +77,28 @@ document.addEventListener("keyup",function(event){
         //if all letters revealed, win
         if(userGuess.join("")===randomWordArr.join("")){
             timeH3.textContent = "you win!"
-            isPlaying=false;
+          
             clearInterval(countdownTimer);
             wins++;
+            rounds--;
+            document.querySelector("#round").textContent=rounds;
             localStorage.setItem("wins",wins);
             winsH3.textContent = wins;
+            if(!rounds){
+                isPlaying=false;
+            } else{
+                startGame();
+            }
         }
 
+    }else {
+        // secondsLeft-=10;
     }
 })
 
 document.querySelector("#start-game").addEventListener("click",function(){
     if(!isPlaying){
+        rounds=3;
         startGame();
     }
 })
