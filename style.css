@@ -1,0 +1,39 @@
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+}
+header {
+    text-align: center;
+    background:darkblue;
+    color:white;
+    height: 15vh;
+}
+
+#start-game {
+    font-size:200%;
+    background:goldenrod;
+    color:darkblue;
+    padding:5px;
+}
+
+#container {
+    display: flex;
+    height: 85vh;
+}
+
+main {
+    width:70%;
+    background:salmon;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main h2 {
+    font-size:500%;
+    letter-spacing: 20px;
+}
+aside{
+    width: 30%;
+}
